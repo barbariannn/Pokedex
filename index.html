@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokeDex</title>
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <style>
+        body {
+    font-family: 'Poppins';
+    /* font-size: 22px; */
+}
+        .image img {
+            width: 100px;
+            height: 100px;
+            /* display: flex; */
+        }
+
+        .image div {
+            padding: 15px;
+            width: 17%;
+            height: 15%;
+            display: inline-block;
+            border: 1px solid #000;
+            text-align: center;
+            text-transform: capitalize;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>PokeDex</h1>
+        <div class="image">
+        </div>
+        <ul id="pokemon-list"></ul>
+    </div>
+    <script>
+        const image = document.querySelector(".image");
+        
+
+        const baseURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/";
+        // const baseURL = "https://raw.githubusercontent.com/PokeAPI/sprites/02ed2f6ed8dabcb89037ec14cf0b2d61c56a7a74/sprites/pokemon/other/dream-world/";
+        const nameURL = "https://pokeapi.co/api/v2/pokemon/";
+
+
+        for (let i = 1; i <= 50; i++) {
+            const div = document.createElement('div');
+            const label = document.createElement('p');
+            const type = document.createElement('p');
+
+            label.innerText = `#${i}`;
+            const name = document.createElement('p');
+
+            // chatgpt start
+            fetch(`${nameURL}${i}`)
+        .then(response => response.json())
+        .then(data => {
+            // Set Pokémon name
+            name.innerText = data.name.charAt(0).toUpperCase() + data.name.slice(1);
+            
+            // Set Pokémon types
+            const types = data.types.map(typeInfo => typeInfo.type.name).join(', ');
+            type.innerText = `Type: ${types.charAt(0).toUpperCase() + types.slice(1)}`;
+        })
+        .catch(error => {
+            name.innerText = "Unknown";
+            type.innerText = "Type: Unknown";
+            console.error(`Error fetching Pokémon ${i} data:`, error);
+        });
+        // chatgpt end
+
+            const newImg = document.createElement('img');
+            newImg.src = `${baseURL}${i}.gif`;  //.svg
+            div.append(newImg);
+            div.append(label);
+            div.append(name);
+            div.append(type);
+            image.appendChild(div);
+        }
+
+
+
+
+    </script>
+</body>
+
+</html>
