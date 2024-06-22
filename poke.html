@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokeDex</title>
+    <style>
+        .image img{
+            width: 100px;
+            display: flex;
+        }
+       .image div{
+        display: inline-block;
+        border: 1px solid #000;text-align: center;
+       }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>PokeDex</h1>
+        <div class="image">
+        </div>
+    </div>
+    <script>
+        const image = document.querySelector(".image")
+        const baseURL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+        for(let i=1;i<200;i++){
+            const div = document.createElement('div');
+            const label = document.createElement('p');
+            label.innerText = `#${i}`;
+            const newImg = document.createElement('img');
+            newImg.src = `${baseURL}${i}.png`;
+            div.append(newImg);
+            div.append(label);
+            image.appendChild(div)
+        }
+    </script>
+</body>
+</html>
